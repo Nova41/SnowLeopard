@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.encanta.mc.ac;
 
 import java.util.ArrayList;
@@ -11,6 +26,18 @@ import java.util.Random;
 import java.util.Set;
 
 public class LVQNeuronNetwork {
+	
+	/**
+	 * A java implementation of learning-vector-quanzitation neuron network
+	 * 
+	 * References: T. Kohonen, "Improved Versions of Learning Vector
+	 * Quantization", International Joint Conference on Neural Networks (IJCNN),
+	 * 1990.
+	 * 
+	 * @author Nova41
+	 * 
+	 */
+	 
 	private List<Dataset> input_layer;
 	private List<Dataset> output_layer;
 	private Map<Double, Dataset> distances;
@@ -19,7 +46,17 @@ public class LVQNeuronNetwork {
 	private double step_alpha_del_rate;
 	private List<Double> input_mins;
 	private List<Double> input_maxs;
-
+	
+	/**
+	 * The constructor of the LVQ neuron network.
+	 * 
+	 * @param features
+	 *            the number of the features
+	 * @param step_alpha
+	 * @param step_alpha_del_rate
+	 * 
+	 */
+	
 	public LVQNeuronNetwork(double step_alpha, double step_alpha_del_rate) {
 		this.input_layer = new ArrayList<Dataset>();
 		this.output_layer = new ArrayList<Dataset>();
@@ -95,10 +132,6 @@ public class LVQNeuronNetwork {
 
 	public void input(String category, Double[] data) {
 		this.input_layer.add(new Dataset(category, data));
-		//this.input_layer_old.add(new Dataset(category, data));
-		// simulate how many features(dimensions) do the input data have
-		//Object[] values = this.input_layer.toArray();
-		//input_features = ((Dataset) values[0]).data.length;
 		input_features = data.length;
 	}
 	
@@ -117,12 +150,8 @@ public class LVQNeuronNetwork {
 			for (int i = 0; i <= input.length - 1; i++)
 				distance += Math.pow(input[i] - output[i], 2);
 			// I don't open root here as it's unnecessary
-			// System.out.println(distance);
 			distances.put(distance, entry);
 		}
-		//System.out.println("Winner: " + getMinKey(distances).category);
-		// Arrays.asList(getMinKey(distances).data));
-		// System.out.println(this.output_layer.indexOf(getMinKey(distances)));
 		return this.output_layer.indexOf(distances.get(getMinKey(distances)));
 	}
 	
@@ -138,12 +167,10 @@ public class LVQNeuronNetwork {
 		return getMinKey(distances);
 	}
 
-	// 将输出节点朝着当前的节点逼近或远离
 	public void move(Dataset input, int output_index) {
 		Dataset output = this.output_layer.get(output_index);
 		if (input.category.equals(output.category)) {
 			for (int i = 0; i <= this.input_features - 1; i++)
-				// + and - alternatively changes
 				this.output_layer.get(output_index).data[i] += this.step_alpha * (input.data[i] - output.data[i]);
 		} else {
 			for (int i = 0; i <= this.input_features - 1; i++)
@@ -160,18 +187,11 @@ public class LVQNeuronNetwork {
 	public int trainUntil(double max_epoch) {
 		int generate = 0;
 		while (this.step_alpha >= max_epoch) {
-			// System.out.println("==============================================");
 			this.train();
 			generate++;
-			this.step_alpha *= this.step_alpha_del_rate; // 步长衰减
-			System.out.println(">> generate: " + generate + " epoch: " + this.step_alpha);
-			this.print_outputlayers();
-			/*try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			this.step_alpha *= this.step_alpha_del_rate;
+			//System.out.println(">> generate: " + generate + " epoch: " + this.step_alpha);
+			//this.print_outputlayers();
 		}
 		return generate;
 	}
@@ -212,7 +232,6 @@ public class LVQNeuronNetwork {
 		Set<Double> set = map.keySet();
 		Object[] obj = set.toArray();
 		Arrays.sort(obj);
-		//return distances.get((Double) obj[0]);
 		return (Double) obj[0];
 	}
 
