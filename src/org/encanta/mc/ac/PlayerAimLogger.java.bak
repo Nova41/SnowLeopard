@@ -1,0 +1,89 @@
+package org.encanta.mc.ac;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
+
+import net.md_5.bungee.api.ChatColor;
+
+public class PlayerAimLogger {
+	private Player player;
+	private HashMap<Integer, Float> viewDiffs;
+	private Timer timer;
+	private AimData data;
+
+	public PlayerAimLogger(Player player) {
+		this.player = player;
+		this.viewDiffs = new HashMap<Integer, Float>();
+		data = new AimData();
+		timer = new Timer();
+	}
+
+	/*public void startCapture() {
+		timer.schedule(new TimerTask() {
+			float pitchOld = 0;
+			float yawOld = 0;
+			int a = 0;
+
+			@Override
+			public void run() {
+				float pitchNew = player.getLocation().getPitch();
+				float yawNew = player.getLocation().getYaw();
+				float viewDiff = (float) Math.sqrt(Math.pow(pitchNew - pitchOld, 2) + Math.pow(yawNew - yawOld, 2));
+				pitchOld = player.getLocation().getPitch();
+				yawOld = player.getLocation().getYaw();
+				if (viewDiff == 0) return;
+				if (a == 0) {
+					a++;
+				} else {
+					viewDiffs.put(a++, viewDiff);
+				}
+			}
+		}, 100, 100);
+	}*/
+	
+	public void startCapture() {
+		timer.schedule(new TimerTask() {
+			int a = 0;
+			@Override
+			public void run() {
+				if (player.getNearbyEntities(10, 10, 10).size() == 0) return;
+				Entity entity = player.getNearbyEntities(10, 10, 10).get(0);
+				Vector playerLookDir = player.getEyeLocation().getDirection();
+				Vector playerEyeLoc = player.getEyeLocation().toVector();
+				Vector entityLoc = entity.getLocation().toVector();
+				Vector playerEntityVec = entityLoc.subtract(playerEyeLoc);
+				float angle = playerLookDir.angle(playerEntityVec);
+				viewDiffs.put(a++, angle);
+			}
+		}, 100, 100);
+	}
+
+	public void terminateCapture() {
+		timer.cancel();
+	}
+	
+	public void stopCapture() {
+		timer.cancel();
+		try {
+			String filename = "captures\\aimdata_" + String.valueOf(System.currentTimeMillis());
+			data.setData(viewDiffs);
+			Utils.saveDatasToFile(filename, data);
+			player.sendMessage(ChatColor.GREEN + "►► Saved aim data as " + System.currentTimeMillis() + ".yml");
+			return;
+		} catch (IOException | InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+		player.sendMessage(ChatColor.RED + "►► Cannot save aim data as " + System.currentTimeMillis() + ".yml, check the console");
+	}
+
+	public void cleanCapturedData() {
+		this.viewDiffs.clear();
+	}
+}

@@ -1,0 +1,9 @@
+main: org.encanta.mc.ac.EncantaAC
+name: EncantaAC
+version: 1.0.0
+author: Unity41
+commands:
+    eac:
+        description: EncantaAC's command.
+        permission: encanta.ac
+        usage: wrong usage.
