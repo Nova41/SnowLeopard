@@ -10,7 +10,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class CombatAnalyser {
 	private EncantaAC main;
-	private LVQNeuronNetwork lvq;
+	private LVQNeuralNetwork lvq;
 
 	public CombatAnalyser(EncantaAC main) {
 		this.main = main;
@@ -18,7 +18,7 @@ public class CombatAnalyser {
 	}
 
 	public void rebuild() throws FileNotFoundException, IOException, InvalidConfigurationException {
-		this.lvq = new LVQNeuronNetwork(0.2, 0.95);
+		this.lvq = new LVQNeuralNetwork(0.2, 0.95);
 		for (Dataset dataset : Utils.getAllCategory())
 			lvq.input(dataset);
 		lvq.normalize();
@@ -27,13 +27,13 @@ public class CombatAnalyser {
 	}
 
 	public void rebuild(Player callback) throws FileNotFoundException, IOException, InvalidConfigurationException {
-		this.lvq = new LVQNeuronNetwork(0.2, 0.95);
+		this.lvq = new LVQNeuralNetwork(0.2, 0.95);
 		for (Dataset dataset : Utils.getAllCategory())
 			lvq.input(dataset);
 		lvq.normalize();
 		lvq.initialize();
 		callback.sendMessage(
-				ChatColor.GREEN + "Rebuilded neuron network with epoch(es) " + lvq.trainUntil(0.00000000001));
+				ChatColor.GREEN + "Rebuilded neural network with epoch(es) " + lvq.trainUntil(0.00000000001));
 	}
 
 	public void sendAnalyse(Player callback, Double[] dump) {
@@ -45,9 +45,9 @@ public class CombatAnalyser {
 	}
 
 	public void sendInfoToPlayer(Player p) {
-		p.sendMessage(ChatColor.AQUA + "  Neuron network: ");
-		p.sendMessage("   Input layer: " + ChatColor.YELLOW + lvq.getInputLayerSize());
-		p.sendMessage("   Output layer: " + ChatColor.YELLOW + lvq.getOutputLayerSize());
+		p.sendMessage(ChatColor.AQUA + "  Neural network: ");
+		p.sendMessage("   Input layer size: " + ChatColor.YELLOW + lvq.getInputLayerSize());
+		p.sendMessage("   Output layer size: " + ChatColor.YELLOW + lvq.getOutputLayerSize());
 		lvq.print_outputlayers();
 
 		try {

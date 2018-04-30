@@ -225,7 +225,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 	}
 
 	public static void main(String[] args) {
-		LVQNeuronNetwork lvq = new LVQNeuronNetwork(0.5, 0.95);
+		LVQNeuralNetwork lvq = new LVQNeuralNetwork(0.5, 0.95);
 
 		Double[][] train_killaura = readDataset("E:/Killaura");
 		for (Double[] line : train_killaura) {

@@ -25,10 +25,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-public class LVQNeuronNetwork {
+public class LVQNeuralNetwork {
 	
 	/**
-	 * A java implementation of learning-vector-quanzitation neuron network
+	 * A java implementation of learning-vector-quanzitation neural network
 	 * 
 	 * References: T. Kohonen, "Improved Versions of Learning Vector
 	 * Quantization", International Joint Conference on Neural Networks (IJCNN),
@@ -48,7 +48,7 @@ public class LVQNeuronNetwork {
 	private List<Double> input_maxs;
 	
 	/**
-	 * The constructor of the LVQ neuron network.
+	 * The constructor of the LVQ neural network.
 	 * 
 	 * @param features
 	 *            the number of the features
@@ -57,7 +57,7 @@ public class LVQNeuronNetwork {
 	 * 
 	 */
 	
-	public LVQNeuronNetwork(double step_alpha, double step_alpha_del_rate) {
+	public LVQNeuralNetwork(double step_alpha, double step_alpha_del_rate) {
 		this.input_layer = new ArrayList<Dataset>();
 		this.output_layer = new ArrayList<Dataset>();
 		this.distances = new HashMap<Double, Dataset>();
