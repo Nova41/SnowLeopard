@@ -21,7 +21,7 @@ public class Utils {
 	public static void saveCapturedData(String name, AimDataSeries data)
 			throws FileNotFoundException, IOException, InvalidConfigurationException {
 		FileConfiguration config = new YamlConfiguration();
-		File file = getFile("captures\\" + name + ".yml");
+		File file = getFile("captures" + File.separator + name + ".yml");
 		file.createNewFile();
 		config.load(file);
 		config.set("stddev", data.getAngleSeries());
@@ -38,7 +38,7 @@ public class Utils {
 	public static void saveCategory(String category, List<Dataset> samples)
 			throws IOException, InvalidConfigurationException {
 		FileConfiguration config = new YamlConfiguration();
-		File file = getFile("categories\\" + category + ".yml");
+		File file = getFile("categories" + File.separator + category + ".yml");
 		file.createNewFile();
 		config.load(file);
 		List<Double[]> dumps = new ArrayList<Double[]>();
