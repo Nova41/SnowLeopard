@@ -38,7 +38,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 		try {
 			this.analyser.rebuild();
 		} catch (IOException | InvalidConfigurationException e) {
-			this.getLogger().severe("Could not build neuron network, please check the stacktrace");
+			this.getLogger().severe("Could not build neural network, please check the stack trace");
 			e.printStackTrace();
 		}
 		this.getCommand("eac").setExecutor(this);
@@ -68,7 +68,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 						this.dataManager.getDataSeries(sender.getName()).save(fileName);
 					} catch (IOException | InvalidConfigurationException e) {
 						e.printStackTrace();
-						sender.sendMessage(messagePrefix + ChatColor.YELLOW + "File saving failed, check consoles");
+						sender.sendMessage(messagePrefix + ChatColor.YELLOW + "File saving failed, check the console");
 					}
 					this.dataManager.removePlayer(sender.getName());
 					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Stopped capturing");
@@ -77,7 +77,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					if (!this.dataManager.isRecording(sender.getName()))
 						return true;
 					this.dataManager.clearData(sender.getName());
-					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Cancelled capturing");
+					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Canceled capturing");
 					return true;
 				case "m":
 					Player p = (Player) sender;
@@ -89,7 +89,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					analyser.sendInfoToPlayer((Player) sender);
 					return true;
 				case "rebuild":
-					sender.sendMessage(messagePrefix + ChatColor.GREEN + "Attempt to rebuild neuron network...");
+					sender.sendMessage(messagePrefix + ChatColor.GREEN + "Attempting to rebuild neural network...");
 					try {
 						analyser.rebuild((Player) sender);
 					} catch (IOException | InvalidConfigurationException e) {
@@ -130,7 +130,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 				case "test":
 					String playername = args[1];
 					int timelength = Integer.valueOf(args[2]);
-					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Attempt to classify " + playername + " for "
+					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Attempting to classify " + playername + " for "
 							+ timelength + " seconds");
 					this.test((Player) sender, Bukkit.getPlayer(playername), timelength);
 					return true;
@@ -164,7 +164,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 							// simulate the delta between current sample and last sample
 							double delta = Math.abs(datas.getAllDump()[i] - samples.get(samples.size() - 1).data[i]);
 							if (delta >= outlierThreshold) {
-								p.sendMessage(messagePrefix + ChatColor.YELLOW + "Outlier detected at sample " + trained + ", resampling...");
+								p.sendMessage(messagePrefix + ChatColor.YELLOW + "Outlier detected at sample " + trained + ". Resampling...");
 								dataManager.clearData(p.getName());
 								return;
 							}
@@ -181,15 +181,15 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					} catch (IOException | InvalidConfigurationException e) {
 						e.printStackTrace();
 						p.sendMessage(
-								messagePrefix + ChatColor.RED + "Failed to save model " + category + ", check console");
+								messagePrefix + ChatColor.RED + "Failed to save model " + category + ", check the console");
 					}
 					dataManager.removePlayer(p.getName());
 					task.cancel();
-					p.sendMessage(messagePrefix + ChatColor.GREEN + "Attempt to rebuild neuron network...");
+					p.sendMessage(messagePrefix + ChatColor.GREEN + "Attempting to rebuild neural network...");
 					try {
 						analyser.rebuild(p);
 					} catch (IOException | InvalidConfigurationException e) {
-						p.sendMessage(messagePrefix + ChatColor.RED + "Failed to build neuron network, check console");
+						p.sendMessage(messagePrefix + ChatColor.RED + "Failed to build neural network, check the console");
 						e.printStackTrace();
 					}
 					return;
@@ -197,7 +197,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 				trained++;
 				p.sendMessage(messagePrefix + ChatColor.YELLOW + "Sampling features for " + category + ", sample " + trained + "/"
 						+ trainPhases);
-				// start train
+				// start training
 				dataManager.addPlayer(p.getName());
 			}
 		}, 0, 20 * trainTimeLength);
@@ -244,10 +244,10 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 		lvq.initialize();
 		lvq.print_outputlayers();
 
-		System.out.println(">> Training Neuron Network... Trained " + lvq.trainUntil(0.00000000001) + " times");
+		System.out.println(">> Training Neural Network... Trained " + lvq.trainUntil(0.00000000001) + " times");
 		lvq.print_outputlayers();
 
-		System.out.println("Predicting the category of a new dataset according to the trained neuron network");
+		System.out.println("Predicting the category of a new dataset according to the trained neural network");
 		System.out.println("  Killaura categorized: " + lvq.predict(
 				new Double[] { 0.14148080214650174, 0.11398027697664276, 0.23061594367027283, 0.11088762416139893 }));
 		System.out.println("  Vanilla categorized: " + lvq.predict(

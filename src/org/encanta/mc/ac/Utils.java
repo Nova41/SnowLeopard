@@ -72,7 +72,8 @@ public class Utils {
 
 	public static void sendInfoToPlayer(Player p)
 			throws FileNotFoundException, IOException, InvalidConfigurationException {
-		p.sendMessage(ChatColor.AQUA + "  Stored " + Utils.getStoredCategoryNum() + " category(s)");
+		int categoryNum = Utils.getStoredCategoryNum();
+		p.sendMessage(ChatColor.AQUA + "  Stored " + categoryNum + (categoryNum != 1 ? " categories" : "category"));
 		File cat_folder = getFile("categories");
 		for (File file : cat_folder.listFiles()) {
 			FileConfiguration sample = new YamlConfiguration();

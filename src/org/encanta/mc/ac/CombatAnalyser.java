@@ -33,7 +33,7 @@ public class CombatAnalyser {
 		lvq.normalize();
 		lvq.initialize();
 		callback.sendMessage(
-				ChatColor.GREEN + "Rebuilded neural network with epoch(es) " + lvq.trainUntil(0.00000000001));
+				ChatColor.GREEN + "Rebuilt neural network with epoch(es) " + lvq.trainUntil(0.00000000001));
 	}
 
 	public void sendAnalyse(Player callback, Double[] dump) {
