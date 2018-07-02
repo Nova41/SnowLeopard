@@ -77,7 +77,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					if (!this.dataManager.isRecording(sender.getName()))
 						return true;
 					this.dataManager.clearData(sender.getName());
-					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Canceled capturing");
+					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Cancelled capturing");
 					return true;
 				case "m":
 					Player p = (Player) sender;
@@ -97,8 +97,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					}
 					return true;
 				case "test":
-					Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-						@Override
+					new BukkitRunnable() {
 						public void run() {
 							Player player = (Player) sender;
 							if (player.getNearbyEntities(10, 10, 10).size() == 0)
@@ -111,8 +110,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 							float angle = playerLookDir.angle(playerEntityVec);
 							player.sendMessage(String.valueOf(angle));
 						}
-
-					}, 0, 10);
+					}.runTaskTimer(this, 0L, 10L);
 					return true;
 				}
 
@@ -142,7 +140,6 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 		return false;
 	}
 
-	private BukkitTask task;
 
 	private void train(Player p, String category) {
 		if (this.dataManager.isRecording(p.getName())) {
@@ -150,7 +147,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					messagePrefix + ChatColor.RED + "Player already in a capturing process, please cancel it at first");
 			return;
 		}
-		task = Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+		new BukkitRunnable() {
 			int trained = 0;
 			List<Dataset> samples = new ArrayList<Dataset>();
 
@@ -159,12 +156,13 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 				if (trained != 0) {
 					AimDataSeries datas = dataManager.getDataSeries(p.getName());
 					// delete outliers
-					if (samples.size() >= 1)	// if last sample != null
+					if (samples.size() >= 1) // if last sample != null
 						for (int i = 0; i <= datas.getAllDump().length - 1; i++) {
 							// simulate the delta between current sample and last sample
 							double delta = Math.abs(datas.getAllDump()[i] - samples.get(samples.size() - 1).data[i]);
 							if (delta >= outlierThreshold) {
-								p.sendMessage(messagePrefix + ChatColor.YELLOW + "Outlier detected at sample " + trained + ". Resampling...");
+								p.sendMessage(messagePrefix + ChatColor.YELLOW + "Outlier detected at sample " + trained
+										+ ". Resampling...");
 								dataManager.clearData(p.getName());
 								return;
 							}
@@ -180,39 +178,40 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 						p.sendMessage(messagePrefix + ChatColor.YELLOW + "Sample saved to " + category);
 					} catch (IOException | InvalidConfigurationException e) {
 						e.printStackTrace();
-						p.sendMessage(
-								messagePrefix + ChatColor.RED + "Failed to save model " + category + ", check the console");
+						p.sendMessage(messagePrefix + ChatColor.RED + "Failed to save model " + category
+								+ ", check the console");
 					}
 					dataManager.removePlayer(p.getName());
-					task.cancel();
+					this.cancel();
 					p.sendMessage(messagePrefix + ChatColor.GREEN + "Attempting to rebuild neural network...");
 					try {
 						analyser.rebuild(p);
 					} catch (IOException | InvalidConfigurationException e) {
-						p.sendMessage(messagePrefix + ChatColor.RED + "Failed to build neural network, check the console");
+						p.sendMessage(
+								messagePrefix + ChatColor.RED + "Failed to build neural network, check the console");
 						e.printStackTrace();
 					}
 					return;
 				}
 				trained++;
-				p.sendMessage(messagePrefix + ChatColor.YELLOW + "Sampling features for " + category + ", sample " + trained + "/"
-						+ trainPhases);
+				p.sendMessage(messagePrefix + ChatColor.YELLOW + "Sampling features for " + category + ", sample "
+						+ trained + "/" + trainPhases);
 				// start training
 				dataManager.addPlayer(p.getName());
 			}
-		}, 0, 20 * trainTimeLength);
+		}.runTaskTimer(this, 0L, 20L * trainTimeLength);
 	}
 
 	private void test(Player callback, Player p, int timelength) {
 		dataManager.addPlayer(p.getName());
-		Bukkit.getScheduler().runTaskLater(this, new Runnable() {
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				AimDataSeries data = getDataManager().getDataSeries(p.getName());
 				dataManager.removePlayer(p.getName());
 				analyser.sendAnalyse(callback, data.getAllDump());
 			}
-		}, 20 * timelength);
+		}.runTaskLater(this, 20L * timelength);
 
 	}
 
