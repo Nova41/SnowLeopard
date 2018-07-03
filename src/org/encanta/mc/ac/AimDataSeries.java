@@ -64,6 +64,9 @@ public class AimDataSeries {
 		return delta_sum;
 	}
 
+	
+	//Add a check here to make sure the delta array is not less than 0. Not going to add this as I don't know how this exactly works and I don't
+	//want to mess up the algorithm.
 	public double[] getDeltas() {
 		double[] deltas = new double[this.getDeltaLength()];
 		for (int i = 0; i <= this.getDeltaLength() - 1; i++) {
