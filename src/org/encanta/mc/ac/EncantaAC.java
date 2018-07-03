@@ -17,22 +17,26 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.Bukkit.ChatColor;
 import org.bukkit.util.Vector;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class EncantaAC extends JavaPlugin implements CommandExecutor {
 	private static EncantaAC instance;
 	private AimDataManager dataManager;
-	final String messagePrefix = ChatColor.GOLD + "(*) "; // ►►
+	final String messagePrefix;
 	private CombatAnalyser analyser;
-	private long trainTimeLength = 6; // in seconds
-	private long trainPhases = 7;
-	private double outlierThreshold = 0.3;
+	private long trainTimeLength;
+	private long trainPhases;
+	private double outlierThreshold;
 
 	public void onEnable() {
 		instance = this;
 		Utils.initFolders();
+		saveDefaultConfig();
+		this.trainTimeLength = getConfig().getLong("train-time-length");
+		this.trainPhases = getConfig().getLong("train-phases");
+		this.outlierThreshold = getConfig().getDouble("outlier-threshold");
+		this.messagePrefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("message-prefix"));
 		this.dataManager = new AimDataManager(this);
 		this.analyser = new CombatAnalyser(this);
 		try {
@@ -71,13 +75,17 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 						sender.sendMessage(messagePrefix + ChatColor.YELLOW + "File saving failed, check the console");
 					}
 					this.dataManager.removePlayer(sender.getName());
-					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Stopped capturing");
+					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Stopped capturing.");
 					return true;
 				case "cancel":
 					if (!this.dataManager.isRecording(sender.getName()))
 						return true;
 					this.dataManager.clearData(sender.getName());
-					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Canceled capturing");
+					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Canceled capturing.");
+					return true;
+				case "rlconfig":
+					reloadConfig();
+					player.sendMessage(messagePrefix + ChatColor.GREEN + "The config has been successfully reloaded.");
 					return true;
 				case "m":
 					Player p = (Player) sender;
@@ -131,7 +139,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 					String playername = args[1];
 					int timelength = Integer.valueOf(args[2]);
 					sender.sendMessage(messagePrefix + ChatColor.YELLOW + "Attempting to classify " + playername + " for "
-							+ timelength + " seconds");
+							+ timelength + " seconds.");
 					this.test((Player) sender, Bukkit.getPlayer(playername), timelength);
 					return true;
 				}
@@ -147,7 +155,7 @@ public class EncantaAC extends JavaPlugin implements CommandExecutor {
 	private void train(Player p, String category) {
 		if (this.dataManager.isRecording(p.getName())) {
 			p.sendMessage(
-					messagePrefix + ChatColor.RED + "Player already in a capturing process, please cancel it at first");
+					messagePrefix + ChatColor.RED + "Player already in a capturing process, please cancel it first!");
 			return;
 		}
 		task = Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
