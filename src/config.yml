@@ -1,0 +1,12 @@
+#
+# SNOW LEOPARD - V1.0.1
+# 
+#
+
+train-phases: 7
+
+train-time-lenght: 6
+
+outlier-threshold: 0.3
+
+message-prefix: "&6(*) "
