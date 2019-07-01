@@ -1,10 +1,10 @@
 # Parameters about sampling
 sampler:
   # How long does it take to generate a vector (milliseconds)
-  duration_to_generate_a_vector: 5000
+  duration_to_generate_a_vector: 6000
 
   # How many vectors are needed to constitute a category
-  vector_per_category: 3
+  vector_per_category: 10
 
 # Learning parameters of the built-in LVQ Neural Network
 LVQNN_parameters:
@@ -12,11 +12,11 @@ LVQNN_parameters:
   # Initial step size. Default: 0.5
   step_size: 0.5
 
-  # Initial step decrease rate. The step size will *= step_dec_rate after each epoch. Default: 0.99
-  step_dec_rate: 0.99
+  # Initial step decrease rate. The step size will *= step_dec_rate after each epoch. Default: 0.95
+  step_dec_rate: 0.95
 
-  # Minimum step size. The step size ceases to decrease if it is lower than this value Default: 0.10
-  min_step_size: 0.10
+  # Minimum step size. The step size ceases to decrease if it is lower than this value Default: 0.01
+  min_step_size: 0.01
 
 LVQNN_train:
   epoch: 100
