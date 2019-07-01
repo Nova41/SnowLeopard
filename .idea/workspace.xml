@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="57efa120-c8b3-48b1-9fbf-fd4947cc74d3" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/SnowLeopardReboot.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="473">
+              <caret line="146" column="36" selection-start-line="146" selection-start-column="36" selection-end-line="146" selection-end-column="36" />
+              <folding>
+                <element signature="method#onEnable#0;class#SnowLeopardReboot#0" />
+                <element signature="method#rebuildNetworkWithDataset#0;class#SnowLeopardReboot#0" />
+                <element signature="e#6341#6737#0" />
+                <element signature="e#6806#7132#0" />
+                <element signature="e#7198#9365#0" />
+                <element signature="e#9430#10550#0" />
+                <element signature="e#10633#11365#0" />
+                <element signature="e#11434#11563#0" />
+                <element signature="e#11635#11784#0" />
+                <element signature="e#11874#13870#0" />
+                <element signature="e#13933#14564#0" />
+                <element signature="method#trainNetwork#0;class#SnowLeopardReboot#0" />
+                <element signature="method#classifyPlayer#0;class#SnowLeopardReboot#0" />
+                <element signature="method#registerCategory#0;class#SnowLeopardReboot#0" />
+                <element signature="method#getCategoryNameFromID#0;class#SnowLeopardReboot#0" />
+                <element signature="method#unregisterAllCategories#0;class#SnowLeopardReboot#0" />
+                <element signature="class#CommandValidate#0;class#SnowLeopardReboot#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/command/CommandManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>getLoggedAngles</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/test/java/com/nova41/bukkitdev/slr/util/MathUtilTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/util/MathUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/model/LVQNeuralNetwork.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/model/LVQNeuralNetworkPredictResult.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/command/CommandManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/SnowLeopardReboot.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="SnowLeopardR" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-23" />
+    <option name="y" value="176" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="slr" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="slr" type="462c0819:PsiDirectoryNode" />
+              <item name="command" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="slr" type="462c0819:PsiDirectoryNode" />
+              <item name="listener" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="slr" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SnowLeopardReboot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SnowLeopardReboot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="slr" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Maven.Clean package clean">
+    <configuration name="MathUtilTest.round" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SnowLeopardReboot" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nova41.bukkitdev.slr.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nova41.bukkitdev.slr.util" />
+      <option name="MAIN_CLASS_NAME" value="com.nova41.bukkitdev.slr.util.MathUtilTest" />
+      <option name="METHOD_NAME" value="round" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Clean package clean" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="package" />
+                <option value="clean" />
+                <option value="-DskipTests" />
+                <option value="-DoutputDirectory=C:\Users\Nova41\Desktop\Minecraft Server\Spigot test server\plugins" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Maven.Clean package clean" />
+      <item itemvalue="JUnit.MathUtilTest.round" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MathUtilTest.round" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 55m 40s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 55m 53s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 56m 29s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 56m 47s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 57m 03s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 57m 32s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 57m 51s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 57m 59s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 59m 14s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_round - 2019.07.01 at 20h 59m 48s.xml">
+      <configuration name="MathUtilTest.round" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="13500000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Maven" weight="0.32995737" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.12.2-R0.1-SNAPSHOT/spigot-api-1.12.2-R0.1-SNAPSHOT-sources.jar!/org/bukkit/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="306" column="18" selection-start-line="306" selection-start-column="18" selection-end-line="306" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/nova41/bukkitdev/slr/util/MathUtilTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.12.2-R0.1-SNAPSHOT/spigot-api-1.12.2-R0.1-SNAPSHOT-sources.jar!/org/bukkit/entity/Damageable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0-sources.jar!/com/google/gson/internal/LinkedTreeMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/util/FileUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/model/LVQNeuralNetworkPredictResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="658">
+          <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/model/LVQNeuralNetworkSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/model/LVQNeuralNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="method#initializeOutputLayer#0;class#LVQNeuralNetwork#0" />
+            <element signature="method#printVectors#0;class#LVQNeuralNetwork#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/model/LabeledData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/listener/PlayerAttackAngleLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/util/MathUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="139" lean-forward="true" selection-start-line="139" selection-end-line="139" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/command/CommandManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.12.2-R0.1-SNAPSHOT/spigot-api-1.12.2-R0.1-SNAPSHOT.jar!/org/bukkit/command/CommandSender.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/spigotmc/spigot-api/1.12.2-R0.1-SNAPSHOT/spigot-api-1.12.2-R0.1-SNAPSHOT.jar!/org/bukkit/ChatColor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nova41/bukkitdev/slr/SnowLeopardReboot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="146" column="36" selection-start-line="146" selection-start-column="36" selection-end-line="146" selection-end-column="36" />
+          <folding>
+            <element signature="method#onEnable#0;class#SnowLeopardReboot#0" />
+            <element signature="method#rebuildNetworkWithDataset#0;class#SnowLeopardReboot#0" />
+            <element signature="e#6341#6737#0" />
+            <element signature="e#6806#7132#0" />
+            <element signature="e#7198#9365#0" />
+            <element signature="e#9430#10550#0" />
+            <element signature="e#10633#11365#0" />
+            <element signature="e#11434#11563#0" />
+            <element signature="e#11635#11784#0" />
+            <element signature="e#11874#13870#0" />
+            <element signature="e#13933#14564#0" />
+            <element signature="method#trainNetwork#0;class#SnowLeopardReboot#0" />
+            <element signature="method#classifyPlayer#0;class#SnowLeopardReboot#0" />
+            <element signature="method#registerCategory#0;class#SnowLeopardReboot#0" />
+            <element signature="method#getCategoryNameFromID#0;class#SnowLeopardReboot#0" />
+            <element signature="method#unregisterAllCategories#0;class#SnowLeopardReboot#0" />
+            <element signature="class#CommandValidate#0;class#SnowLeopardReboot#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
