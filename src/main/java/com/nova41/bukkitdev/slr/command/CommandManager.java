@@ -33,9 +33,15 @@ public class CommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 0 && registeredCommands.containsKey("")) {
+            registeredCommands.get("").accept(sender, args);
+            return true;
+        }
+
         String fullExecution = String.join(" ", args).toLowerCase();
         Optional<Map.Entry<String, BiConsumer<CommandSender, String[]>>> matchedCommand =
                 registeredCommands.entrySet().stream()
+                        .filter(entry -> !entry.getKey().equals(""))
                         .filter(entry -> fullExecution.startsWith(entry.getKey()))
                         .findAny();
         if (matchedCommand.isPresent()) {

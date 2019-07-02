@@ -27,6 +27,7 @@ public class CommandManagerTest {
         String[] args = "region flag set fly true".split(" ");
 
         CommandManager manager = new CommandManager(null, "slr");
+        manager.register("", (sender, params) -> sender.sendMessage("Called command without args"));
         manager.register("region flag set", (sender, params) -> sender.sendMessage(String.join(" ", params)));
         manager.onCommand(mockedSender, mockedCommand, null, args);
     }
