@@ -413,7 +413,7 @@ public class SnowLeopardReboot extends JavaPlugin {
     }
 
     // Convert category id from a predict result of the neural network to actual name of category
-    private String getCategoryNameFromID(int id) {
+    public String getCategoryNameFromID(int id) {
         for (Map.Entry<String, Integer> entry : categoryNameMap.entrySet())
             if (entry.getValue() == id)
                 return entry.getKey();
