@@ -165,7 +165,7 @@ public class SnowLeopardReboot extends JavaPlugin {
 
             Player player = (Player) sender;
             angleLogger.registerPlayer(player); // start logging angles
-            sender.sendMessage(ChatColor.GREEN + "Start logging angles for " + ChatColor.YELLOW + player.getName());
+            sender.sendMessage(ChatColor.GREEN + "Started logging angles for " + ChatColor.YELLOW + player.getName());
 
         }));
 
@@ -175,7 +175,7 @@ public class SnowLeopardReboot extends JavaPlugin {
 
             Player player = (Player) sender;
             if (!angleLogger.getRegisteredPlayers().contains(player.getName())) {
-                sender.sendMessage(ChatColor.RED + "You haven't start logging angles for " + ChatColor.YELLOW + player.getName());
+                sender.sendMessage(ChatColor.RED + "You haven't started logging angles for " + ChatColor.YELLOW + player.getName());
                 return;
             }
 
@@ -281,7 +281,7 @@ public class SnowLeopardReboot extends JavaPlugin {
             // If the duration is not set, it would be 10 seconds by default
             int duration = params.length == 1 ? 10 : Integer.valueOf(params[1]);
 
-            sender.sendMessage(ChatColor.GREEN + "Attempt to sample motion of " + ChatColor.YELLOW + params[0]
+            sender.sendMessage(ChatColor.GREEN + "Attempting to sample motion of " + ChatColor.YELLOW + params[0]
                     + ChatColor.GREEN + " for " + ChatColor.YELLOW + duration + ChatColor.GREEN + " seconds");
             classifyPlayer(testPlayer, duration , result -> {
                 // likelihood =  max possible difference - difference
@@ -391,7 +391,7 @@ public class SnowLeopardReboot extends JavaPlugin {
     public void classifyPlayer(Player player, int duration, Consumer<LVQNeuralNetworkPredictResult> consumer) {
         // Check if angle sequence of the given player is already being logged
         if (angleLogger.getRegisteredPlayers().contains(player.getName())) {
-            player.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.RED + "is already in a sampling process. Please stop sampling first.");
+            player.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.RED + " is already in a sampling process. Please stop sampling first.");
             return;
         }
 
