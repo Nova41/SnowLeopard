@@ -323,8 +323,8 @@ public class SnowLeopardReboot extends JavaPlugin {
                     return;
                 }
 
-            // If the duration is not set, it would be 10 seconds by default
-            int duration = params.length == 1 ? 10 : Integer.valueOf(params[1]);
+            // If the duration is not set, it would be the default duration specified in config.yml
+            int duration = params.length == 1 ? getConfig().getInt("test.default_duration") : Integer.valueOf(params[1]);
 
             sender.sendMessage(ChatColor.GREEN + "Attempting to sample motion of " + ChatColor.YELLOW + params[0]
                     + ChatColor.GREEN + " for " + ChatColor.YELLOW + duration + ChatColor.GREEN + " seconds");
