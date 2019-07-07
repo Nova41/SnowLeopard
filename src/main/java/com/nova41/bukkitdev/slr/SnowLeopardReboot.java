@@ -52,6 +52,9 @@ public class SnowLeopardReboot extends JavaPlugin {
     // Logger for logging angle sequence produced by players
     private PlayerAttackAngleLogger angleLogger;
 
+    // Contains all players requested to cancel the sampling process
+    private Set<String> requestedCancellation = new HashSet<>();
+
     // Manager managing all sub commands of the plugin
     private CommandManager commandManager;
 
@@ -137,6 +140,7 @@ public class SnowLeopardReboot extends JavaPlugin {
         });
     }
 
+    // Register all sub commands of SnowLeopardR
     private void registerCommands() {
         /* Sub Commands */
         // /slr
@@ -149,6 +153,7 @@ public class SnowLeopardReboot extends JavaPlugin {
             sender.sendMessage(ChatColor.YELLOW + "/slr rebuild" + ChatColor.WHITE + " Reload dataset and rebuild the network");
             sender.sendMessage(ChatColor.YELLOW + "/slr reload" + ChatColor.WHITE + " Reload configurations");
             sender.sendMessage(ChatColor.YELLOW + "/slr test <player> [duration]" + ChatColor.WHITE + " Classify motion of a player");
+            sender.sendMessage(ChatColor.YELLOW + "/slr cancel [player]" + ChatColor.WHITE + " Attempt to cancel sampling processes related to the player");
             sender.sendMessage(ChatColor.YELLOW + "/slr mob" + ChatColor.WHITE + " Spawn a punchbag villager (50 hearts) for sampling or testing");
         });
 
@@ -163,10 +168,36 @@ public class SnowLeopardReboot extends JavaPlugin {
         commandManager.register("start", ((sender, params) -> {
             if (CommandValidate.notPlayer(sender)) return;
 
+            if (angleLogger.getRegisteredPlayers().contains(sender.getName())) {
+                sender.sendMessage(ChatColor.RED + "Player is already in a sampling process. Please stop sampling first.");
+                return;
+            }
+
+            // Check if the sampling process of the player is requested to be cancelled to avoid conflicts.
+            if (requestedCancellation.contains(sender.getName())) {
+                sender.sendMessage(ChatColor.RED + "Please wait the current sampling process of " + ChatColor.YELLOW + sender.getName() +
+                        ChatColor.RED + " to be cancelled.");
+                return;
+            }
+
             Player player = (Player) sender;
             angleLogger.registerPlayer(player); // start logging angles
             sender.sendMessage(ChatColor.GREEN + "Started logging angles for " + ChatColor.YELLOW + player.getName());
 
+            // watchdog for monitoring if the player wants to cancel the sampling process
+            getServer().getScheduler().runTaskAsynchronously(this, () -> {
+                while (true) {
+                    if (requestedCancellation.remove(player.getName())) {
+                        player.sendMessage(ChatColor.GREEN + "Successfully cancelled the sampling process.");
+                        break;
+                    }
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }));
 
         // /slr stop
@@ -237,6 +268,13 @@ public class SnowLeopardReboot extends JavaPlugin {
                 return;
             }
 
+            // Check if the sampling process of the player is requested to be cancelled to avoid conflicts.
+            if (requestedCancellation.contains(sender.getName())) {
+                sender.sendMessage(ChatColor.RED + "Please wait the current sampling process of " + ChatColor.YELLOW + sender.getName() +
+                        ChatColor.RED + " to be cancelled.");
+                return;
+            }
+
             // Read configurations of sampler from config.yml. See config.yml for further information
             int duration_to_generate_a_vector = getConfig().getInt("sampler.duration_to_generate_a_vector");
             int vector_per_category = getConfig().getInt("sampler.vector_per_category");
@@ -268,6 +306,13 @@ public class SnowLeopardReboot extends JavaPlugin {
             // Check if the specified player is online
             if (testPlayer == null) {
                 sender.sendMessage(ChatColor.RED + "Unable to find the player " + ChatColor.YELLOW + params[0]);
+                return;
+            }
+
+            // Check if the sampling process of the player is requested to be cancelled to avoid conflicts.
+            if (requestedCancellation.contains(testPlayer.getName())) {
+                sender.sendMessage(ChatColor.RED + "Please wait the current sampling process of " + ChatColor.YELLOW + testPlayer.getName() +
+                        ChatColor.RED + " to be cancelled.");
                 return;
             }
 
@@ -308,6 +353,42 @@ public class SnowLeopardReboot extends JavaPlugin {
             villager.setHealth(100.0D);
         });
 
+        // /slr cancel [player]
+        commandManager.register("cancel", (sender, params) -> {
+            // Check the number of arguments
+            if (params.length > 1) {
+                sender.sendMessage(ChatColor.RED + "Wrong parameters! /slr abort [player]");
+                return;
+            }
+
+            // When the argument [player] is not specified the plugin will attempt to abort sampling process about the sender
+            if (params.length == 0 && !(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "Please specify a valid player.");
+                return;
+            }
+
+            Player abortPlayer = params.length == 1 ? getServer().getPlayer(params[0]) : (Player) sender;
+
+            // Check if the specified player is online
+            if (abortPlayer == null) {
+                sender.sendMessage(ChatColor.RED + "Unable to find the player " + ChatColor.YELLOW + params[0]);
+                return;
+            }
+
+            if (requestedCancellation.contains(sender.getName())) {
+                sender.sendMessage(ChatColor.RED + "Already requested to cancel sampling process of " + ChatColor.YELLOW + sender.getName());
+                return;
+            }
+
+            if (!isBeingSampled(abortPlayer)) {
+                sender.sendMessage(ChatColor.YELLOW + abortPlayer.getName() + ChatColor.RED + " is not being sampled");
+                return;
+            }
+
+            sender.sendMessage(ChatColor.GREEN + "Requested to cancel sampling process of " + ChatColor.YELLOW + abortPlayer.getName());
+            stopSampling(abortPlayer);
+        });
+
         // /slr _printnn
         commandManager.register("_printnn", (sender, params) -> neuralNetwork.printStats(getLogger()));
     }
@@ -346,14 +427,21 @@ public class SnowLeopardReboot extends JavaPlugin {
                 }
                 // get the angle sequence containing angles in the past duration_to_generate_a_vector milliseconds
                 List<Float> angleSequence = angleLogger.getLoggedAngles(player);
-                // do nothing if the player does not attack anybody in the past duration
-                if (angleSequence == null)
-                    break;
-                // extract the features from the sequence and save them to a temporary array
-                vectors[i - 1] = MathUtil.extractFeatures(angleSequence);
-                // clear saved angles to get ready for new angles
-                angleLogger.clearLoggedAngles(player);
+                // extract the features only if the player has produced angle sequence (attacked in the past duration)
+                if (angleSequence != null) {
+                    // extract the features from the sequence and save them to a temporary array
+                    vectors[i - 1] = MathUtil.extractFeatures(angleSequence);
+                    // clear saved angles to get ready for new angles
+                    angleLogger.clearLoggedAngles(player);
+                }
+
+                // Check if the player wants to cancel the sampling process
+                if (requestedCancellation.remove(player.getName())) {
+                    player.sendMessage(ChatColor.GREEN + "Successfully cancelled the sampling process of training.");
+                    return;
+                }
             }
+
             angleLogger.unregisterPlayer(player);
             player.sendMessage(ChatColor.GREEN + "Finished sampling player's motion. Saving samples...");
 
@@ -387,23 +475,6 @@ public class SnowLeopardReboot extends JavaPlugin {
         });
     }
 
-    //returns whether or not player is being classifed
-    public boolean isTesting(Player player) {
-        return angleLogger.getRegisteredPlayers().contains(player.getName());
-    }
-    
-    public void stopTesting(Player player) {
-        if(!isTesting(player) {
-            return;
-        }
-        //TODO: FOR NOVA!!! I don't fully know what is done to the player while they're being tested, but it looks like AT LEAST the following
-        //should be done. The scheduler should be stopped as well if possible! In this case I'd consider using a BukkitRunnable as these can be cancelled.
-        angleLogger.unregisterPlayer(player);
-        angleLogger.clearLoggedAngles(player);
-        //HERE IS WHERE THE TASK SHOULD BE CANCELLED!
-     }
-           
-    
     // Let the network guess which category does the player result in
     public void classifyPlayer(Player player, int duration, Consumer<LVQNeuralNetworkPredictResult> consumer) {
         // Check if angle sequence of the given player is already being logged
@@ -414,6 +485,13 @@ public class SnowLeopardReboot extends JavaPlugin {
 
         angleLogger.registerPlayer(player);
         getServer().getScheduler().runTaskLater(this, () -> {
+            // Check if the player gets unregistered in angleLogger during the process, which means
+            // the player wants to cancel the sampling process
+            if (requestedCancellation.remove(player.getName())) {
+                player.sendMessage(ChatColor.GREEN + "Successfully cancelled the sampling process of classification.");
+                return;
+            }
+
             List<Float> angleSequence = angleLogger.getLoggedAngles(player);
             angleLogger.unregisterPlayer(player);
             angleLogger.clearLoggedAngles(player);
@@ -450,6 +528,27 @@ public class SnowLeopardReboot extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "This command can only executed by a player.");
             return !(sender instanceof Player);
         }
+    }
+
+    /* API methods are methods made for external access and not used in the plugin. */
+    // API Method: returns whether or not player is being sampled
+    public boolean isBeingSampled(Player player) {
+        return angleLogger.getRegisteredPlayers().contains(player.getName());
+    }
+
+    // API Method: stop the sampling process for a player.
+    // This will make angleLogger stop logging angles instantly, and BukkitTask sampling angles will be cancelled later.
+    public void stopSampling(Player player) {
+        if (!isBeingSampled(player))
+            return;
+
+        // Unregister the player and clear angles already logged.
+        angleLogger.unregisterPlayer(player);
+        angleLogger.clearLoggedAngles(player);
+
+        // Add the player to requestCancellation so the player can't start other sampling process until the current one is cancelled.
+        // And BukkitTask will find that the player wants to cancel during the sampling process and cancel themselves.
+        requestedCancellation.add(player.getName());
     }
 
 }
