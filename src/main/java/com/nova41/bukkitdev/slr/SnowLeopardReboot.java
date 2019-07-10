@@ -387,23 +387,6 @@ public class SnowLeopardReboot extends JavaPlugin {
         });
     }
 
-    //returns whether or not player is being classifed
-    public boolean isTesting(Player player) {
-        return angleLogger.getRegisteredPlayers().contains(player.getName());
-    }
-    
-    public void stopTesting(Player player) {
-        if(!isTesting(player) {
-            return;
-        }
-        //TODO: FOR NOVA!!! I don't fully know what is done to the player while they're being tested, but it looks like AT LEAST the following
-        //should be done. The scheduler should be stopped as well if possible! In this case I'd consider using a BukkitRunnable as these can be cancelled.
-        angleLogger.unregisterPlayer(player);
-        angleLogger.clearLoggedAngles(player);
-        //HERE IS WHERE THE TASK SHOULD BE CANCELLED!
-     }
-           
-    
     // Let the network guess which category does the player result in
     public void classifyPlayer(Player player, int duration, Consumer<LVQNeuralNetworkPredictResult> consumer) {
         // Check if angle sequence of the given player is already being logged
