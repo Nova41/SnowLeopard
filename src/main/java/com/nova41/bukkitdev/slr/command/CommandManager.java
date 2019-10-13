@@ -17,7 +17,7 @@ public class CommandManager implements CommandExecutor {
     // All registered commands
     private final Map<String, BiConsumer<CommandSender, String[]>> registeredCommands = new HashMap<>();
 
-    // Create an instance of the CommandManager class
+    // Creates an instance of the CommandManager class
     public CommandManager(Plugin plugin, String baseCommand) {
         if (plugin != null)
             plugin.getServer().getPluginCommand(baseCommand).setExecutor(this);
