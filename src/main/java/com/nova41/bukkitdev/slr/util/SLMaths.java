@@ -152,12 +152,12 @@ public final class SLMaths {
         return minMax;
     }
 
-    // normalize a value with feature scaling according to the given min and max
+    // Normalize a value with feature scaling according to the given min and max
     public static double normalize(double value, double min, double max) {
         return (value - min) / (max - min);
     }
 
-    // round a value with given arguments
+    // Round a value with given arguments
     public static double round(double value, int precision, RoundingMode mode) {
         return BigDecimal.valueOf(value).round(new MathContext(precision, mode)).doubleValue();
     }

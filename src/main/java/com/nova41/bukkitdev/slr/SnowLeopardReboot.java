@@ -362,14 +362,6 @@ public final class SnowLeopardReboot extends JavaPlugin {
                 .printStats(getLogger()));
     }
 
-    /**
-     * Train the network. Tell the network there is a category waiting to be learned from the player.
-     *
-     * @param player
-     * @param category
-     * @param durationToGenerateAVector
-     * @param vectorPerCategory
-     */
     @SuppressWarnings("unchecked")
     public void trainNetwork(Player player, String category,
                              int durationToGenerateAVector, int vectorPerCategory) {
@@ -432,7 +424,7 @@ public final class SnowLeopardReboot extends JavaPlugin {
                 FileConfiguration saveFileYaml = new YamlConfiguration();
                 List<Double[]> samplesSection = new ArrayList<>();
 
-                // append vectors to the category if the category already exists
+                // Append vectors to the category if the category already exists
                 if (!saveFile.createNewFile()) {
                     saveFileYaml.load(saveFile);
                     samplesSection.addAll((Collection<? extends Double[]>)

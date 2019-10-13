@@ -159,18 +159,18 @@ public class LVQNeuralNetwork {
         System.out.println("Input vectors: ");
         int[][] outputImage = new int[vectors.size()][vectors.size()];
 
-        // draw
+        // Draw
         for (LabeledData vector : vectors)
             outputImage[(int) (vector.getData()[0] * 10)][(int) (vector.getData()[1] * 10)]
                     = vector.getCategory() + 1;
         drawLayer(outputImage);
 
-        // clear outputImage[][] for drawing output layer
+        // Clear outputImage[][] for drawing output layer
         for (int i = 0; i <= outputImage.length - 1; i++)
             for (int j = 0; j <= outputImage.length - 1; j++)
                 outputImage[i][j] = 0;
 
-        // draw
+        // Draw
         System.out.println("Output layer: ");
         for (LabeledData vector : classCenters)
             outputImage[(int) Math.round(vector.getData()[0] * 10)][(int) Math.round(vector.getData()[1] * 10)]
@@ -196,6 +196,7 @@ public class LVQNeuralNetwork {
         */
     }
 
+    // Draws layer
     public void drawLayer(int[][] outputImage) {
         System.out.println("+" + StringUtils.repeat("--", vectors.size()) + "+");
         for (int i = 0; i <= outputImage.length - 1; i++) {
@@ -207,7 +208,7 @@ public class LVQNeuralNetwork {
         System.out.println("+" + StringUtils.repeat("--", vectors.size()) + "+");
     }
 
-    // print network info
+    // Print network info
     public final void printStats(Logger logger) {
         logger.info("Current Epoch: " + epoch + ", Current step size: " + stepSize);
         logger.info("Output layer:");
@@ -218,7 +219,7 @@ public class LVQNeuralNetwork {
                 + Arrays.toString(vector.getData())));
     }
 
-    // get summary statistics of the network
+    // Get summary statistics of the network
     public final LVQNeuralNetworkSummary getSummaryStatistics() {
         return new LVQNeuralNetworkSummary(epoch, stepSize, vectors.size(), classCenters.size());
     }
