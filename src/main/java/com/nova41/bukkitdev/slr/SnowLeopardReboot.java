@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -138,7 +139,7 @@ public final class SnowLeopardReboot extends JavaPlugin {
         }
 
         // Train asynchronously
-        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+        CompletableFuture.runAsync(() -> {
             int epoch = getConfig().getInt("LVQNN_train.epoch");
             neuralNetwork.getAndUpdate(LVQNeuralNetwork::normalize);
             neuralNetwork.getAndUpdate(LVQNeuralNetwork::initializeOutputLayer);
@@ -380,7 +381,7 @@ public final class SnowLeopardReboot extends JavaPlugin {
         /* FIRST. We need to get angle sequence of a player, and then extract features from the sequence */
 
         // Do asynchronously
-        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+        CompletableFuture.runAsync(() -> {
             // Vectors are stored here
             double[][] vectors = new double[vectorPerCategory][SnowLeopardReboot.FEATURE_COUNT];
 
