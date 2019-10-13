@@ -1,16 +1,17 @@
 package com.nova41.bukkitdev.slr.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LVQNeuralNetworkTest {
 
     @Test
     public void testTrain() {
-        LVQNeuralNetwork neuralNetwork = new LVQNeuralNetwork(2, 0.5, 0.99, 0.10);
+        LVQNeuralNetwork neuralNetwork = new LVQNeuralNetwork(
+                2, 0.5, 0.99, 0.10);
 
         neuralNetwork.addData(new LabeledData(0, new double[]{0.3, 0.5}));
         neuralNetwork.addData(new LabeledData(0, new double[]{-0.1, -0.2}));

@@ -1,20 +1,22 @@
 package com.nova41.bukkitdev.slr.util;
 
 import com.nova41.bukkitdev.slr.model.LabeledData;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MathUtilTest {
+public class MathsTest {
+
+    private static final double DELTA = 1e-15;
 
     @Test
     public void round() {
-        assertEquals(0.13, SLMaths.round(0.1256, 2, RoundingMode.HALF_UP), 0);
+        assertEquals(0.13, SLMaths.round(0.1256, 2, RoundingMode.HALF_UP), DELTA);
     }
 
     @Test
@@ -26,4 +28,5 @@ public class MathUtilTest {
         SLMaths.normalize(dataset);
         dataset.forEach(data -> System.out.println(Arrays.toString(data.getData())));
     }
+
 }

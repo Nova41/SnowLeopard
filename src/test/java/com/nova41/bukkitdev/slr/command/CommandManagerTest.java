@@ -2,10 +2,10 @@ package com.nova41.bukkitdev.slr.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CommandManagerTest {
@@ -29,4 +29,5 @@ public class CommandManagerTest {
         manager.register("region flag set", (sender, params) -> sender.sendMessage(String.join(" ", params)));
         manager.onCommand(mockedSender, mockedCommand, null, args);
     }
+
 }

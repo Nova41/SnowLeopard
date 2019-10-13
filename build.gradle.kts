@@ -1,6 +1,7 @@
 plugins {
-    `java-library`
+    java
     `build-scan`
+    `java-test-fixtures`
     pmd
     checkstyle
     id("com.github.spotbugs") version "1.7.1"
@@ -19,14 +20,13 @@ repositories {
 
 dependencies {
     spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.9.0")
-    compile("com.google.inject", "guice", "4.2.2")
-    compile("org.apache.logging.log4j", "log4j-core", "2.12.1")
-    compile("org.apache.logging.log4j", "log4j-api", "2.12.1")
     compile("commons-io:commons-io:2.6")
-    compileOnly("org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT")
+    compile("org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT")
     compileOnly("org.projectlombok", "lombok", "1.18.8")
     annotationProcessor("org.projectlombok", "lombok", "1.18.8")
-
+    testCompile("org.mockito", "mockito-all", "1.9.5")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
 }
 
 tasks {
@@ -89,6 +89,10 @@ tasks {
         ignoreFailures = true
         ruleSetConfig = resources.text.fromFile(file("${rootProject.projectDir}/config/pmd/ruleset.xml"))
     }
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
 
 buildScan {
