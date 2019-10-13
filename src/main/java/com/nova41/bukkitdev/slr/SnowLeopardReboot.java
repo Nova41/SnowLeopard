@@ -46,13 +46,13 @@ public final class SnowLeopardReboot extends JavaPlugin {
     public static final String DIRNAME_DUMPED_DATA = "dumped_data";
 
     // Amount of features existing in our dataset; 4 currently
-    public static int FEATURE_COUNT = 4;
+    public static final int FEATURE_COUNT = 4;
+
+    // Map category names to an integer, because the network perceives a class as an integer
+    private final Map<String, Integer> categoryNameMap = new HashMap<>();
 
     // Built-in neural network for category classification
     private AtomicReference<LVQNeuralNetwork> neuralNetwork;
-
-    // Map category names to an integer, because the network perceives a class as an integer
-    private Map<String, Integer> categoryNameMap = new HashMap<>();
 
     // Logger for logging angle sequence produced by players
     private PlayerAttackAngleLogger angleLogger;
@@ -65,13 +65,12 @@ public final class SnowLeopardReboot extends JavaPlugin {
     @Override
     public void onEnable() {
         // Initialize data folder
-        SLFiles.createDirectoryIfAbsent(getDataFolder(), DIRNAME_CATEGORY);
-        SLFiles.createDirectoryIfAbsent(getDataFolder(), DIRNAME_DUMPED_DATA);
         try {
+            SLFiles.createDirectoryIfAbsent(getDataFolder().getPath(), DIRNAME_CATEGORY);
+            SLFiles.createDirectoryIfAbsent(getDataFolder().getPath(), DIRNAME_DUMPED_DATA);
             SLFiles.saveResourceIfAbsent(this, "config.yml", "config.yml");
         } catch (IOException e) {
             getLogger().severe("Unable to save resource file");
-            e.printStackTrace();
         }
 
         rebuildNetworkWithDataset();
@@ -129,13 +128,11 @@ public final class SnowLeopardReboot extends JavaPlugin {
                 int categoryID = categoryNameMap.get(categoryName);
 
                 // Add the parsed data to our dataset
-                LVQNeuralNetwork networkState = neuralNetwork.get();
                 for (List<Double> samples : categorySamples)
                     neuralNetwork.getAndUpdate((network) -> network.addData(new LabeledData(categoryID,
                             samples.stream().mapToDouble(e -> e).toArray())));
 
             } catch (InvalidConfigurationException | IOException e) {
-                e.printStackTrace();
                 getLogger().severe("Unable to read dataset from '" + categoryFile.getName() + "'");
             }
         }
@@ -241,7 +238,6 @@ public final class SnowLeopardReboot extends JavaPlugin {
                 getLogger().severe("Unable to dump vector and angles of player '"
                         + player.getName() + "'");
                 sender.sendMessage(ChatColor.RED + "Failed to save logged angles due to an I/O error");
-                e.printStackTrace();
             }
         });
 
@@ -315,12 +311,10 @@ public final class SnowLeopardReboot extends JavaPlugin {
             }
 
             // Check if the given duration is valid
-            if (params.length == 2) {
-                if (!StringUtils.isNumeric(params[1])) {
-                    sender.sendMessage(ChatColor.YELLOW + params[1] + ChatColor.RED
-                            + " is not a valid " + "number");
-                    return;
-                }
+            if (params.length == 2 && !StringUtils.isNumeric(params[1])) {
+                sender.sendMessage(ChatColor.YELLOW + params[1] + ChatColor.RED
+                        + " is not a valid " + "number");
+                return;
             }
 
             // If the duration is not set, it would be the default duration specified in config.yml
@@ -367,7 +361,6 @@ public final class SnowLeopardReboot extends JavaPlugin {
         commandManager.register("_printnn", (sender, params) -> neuralNetwork.get()
                 .printStats(getLogger()));
     }
-
 
     /**
      * Train the network. Tell the network there is a category waiting to be learned from the player.
@@ -458,9 +451,8 @@ public final class SnowLeopardReboot extends JavaPlugin {
 
                 player.sendMessage(ChatColor.GREEN + "Samples saved.");
             } catch (IOException | InvalidConfigurationException e) {
-                getLogger().severe("Unable to save sample for category '" + category + "'");
-                e.printStackTrace();
                 player.sendMessage(ChatColor.RED + "Unable to save samples due to an I/O error");
+                getLogger().severe("Unable to save sample for category '" + category + "'");
             }
         });
     }

@@ -18,12 +18,12 @@ import java.util.*;
  */
 public class PlayerAttackAngleLogger implements Listener {
 
+    // Stores all players attacking and angle sequence they produced
+    private final Map<String, List<Float>> loggedAngles = new HashMap<>();
+
     // Lists all players whose loggedAngles need to be logged
     @Getter
-    private Set<String> registeredPlayers = new HashSet<>();
-
-    // Stores all players attacking and angle sequence they produced
-    private Map<String, List<Float>> loggedAngles = new HashMap<>();
+    private final Set<String> registeredPlayers = new HashSet<>();
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {

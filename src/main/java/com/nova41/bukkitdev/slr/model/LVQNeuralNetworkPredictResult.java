@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class LVQNeuralNetworkPredictResult {
 
     // Distances to different class centers
-    private List<Map.Entry<Double, Integer>> distances;
+    private final List<Map.Entry<Double, Integer>> distances;
 
     /**
      * Create a new predict result. The constructor can only be accessed by a neural network.

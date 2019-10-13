@@ -6,10 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
@@ -18,7 +15,7 @@ import java.util.function.BiConsumer;
 public class CommandManager implements CommandExecutor {
 
     // All registered commands
-    private Map<String, BiConsumer<CommandSender, String[]>> registeredCommands = new HashMap<>();
+    private final Map<String, BiConsumer<CommandSender, String[]>> registeredCommands = new HashMap<>();
 
     // Create an instance of the CommandManager class
     public CommandManager(Plugin plugin, String baseCommand) {
@@ -28,7 +25,7 @@ public class CommandManager implements CommandExecutor {
 
     // Register command
     public void register(String command, BiConsumer<CommandSender, String[]> event) {
-        registeredCommands.put(command.toLowerCase(), event);
+        registeredCommands.put(command.toLowerCase(Locale.ENGLISH), event);
     }
 
     @Override

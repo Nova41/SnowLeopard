@@ -5,6 +5,10 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Helper functions for handling files.
@@ -20,20 +24,25 @@ public final class SLFiles {
      * @param url base URL
      * @return modified URL
      */
-    public static String checkSeparator(String url) {
+    public static String getSeparatedString(String url) {
         return url.replace("\\", File.separator);
     }
 
+    public static Path getSeparatedPath(String url) {
+        return Paths.get(URI.create(getSeparatedString(url)));
+    }
+
     // Mkdir with ease
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void createDirectoryIfAbsent(File dataFolder, String directoryName) {
-        new File(dataFolder, checkSeparator(directoryName)).mkdirs();
+    public static void createDirectoryIfAbsent(String path, String directoryName) throws IOException {
+        Files.createDirectory(getSeparatedPath(path + "//" + directoryName));
     }
 
     // Save resource file to destination
     public static void saveResourceIfAbsent(
-            Plugin plugin, String fileName, String releasePath) throws IOException {
-        File toBeReleased = new File(plugin.getDataFolder(), checkSeparator(releasePath));
+            Plugin plugin,
+            String fileName,
+            String releasePath) throws IOException {
+        File toBeReleased = new File(plugin.getDataFolder(), getSeparatedString(releasePath));
         if (!toBeReleased.exists())
             FileUtils.copyInputStreamToFile(plugin.getResource(fileName), toBeReleased);
     }

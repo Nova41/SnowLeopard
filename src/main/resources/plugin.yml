@@ -1,8 +1,10 @@
-name: ${name}
+name: SnowLeopard
 main: com.nova41.bukkitdev.slr.SnowLeopardReboot
-version: ${version}
+api-version: "1.14"
+
+version: 2.0.0
 author: Nova41
-description: ${description}
+
 commands:
   snowleopardr:
     aliases: [sl, slr, eac]

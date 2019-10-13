@@ -22,21 +22,21 @@ import java.util.stream.Collectors;
  */
 public class LVQNeuralNetwork {
 
-    private double stepSize;         // initial step size, recommended: 0.5
-    private double stepDecRate;    // step decrease rate, recommended: 0.99
-    private double minStepSize;    // minimum step size, recommended: 0.10
+    // Stores all labeled vector
+    private final List<LabeledData> vectors = new ArrayList<>();
+
+    // The center vector of categories (lso called the output layer)
+    private final List<LabeledData> classCenters = new ArrayList<>();
+
+    private double stepSize;        // initial step size, recommended: 0.5
+    private double stepDecRate;     // step decrease rate, recommended: 0.99
+    private double minStepSize;     // minimum step size, recommended: 0.10
 
     // Times the network has been trained
     private int epoch = 0;
 
     // The number of dimensions expected from input vectors
     private int dimension;
-
-    // Stores all labeled vector
-    private List<LabeledData> vectors = new ArrayList<>();
-
-    // The center vector of categories (lso called the output layer)
-    private List<LabeledData> classCenters = new ArrayList<>();
 
     // Min and max value in each row in dataset
     private double[][] minMaxOfRow;
@@ -73,7 +73,7 @@ public class LVQNeuralNetwork {
         if (classCenters.size() == 0)
             throw new IllegalStateException("Output layer is not initialized yet");
 
-        TreeMap<Double, Integer> distanceToInput = new TreeMap<>();
+            TreeMap<Double, Integer> distanceToInput = new TreeMap<>();
         for (int i = 0; i <= classCenters.size() - 1; i++)
             distanceToInput.put(SLMaths.euclideanDistance(vector, classCenters.get(i).getData()), i);
         return distanceToInput;
@@ -92,7 +92,13 @@ public class LVQNeuralNetwork {
                 .forEach(category -> vectors.stream()
                         .filter(vector -> vector.getCategory() == category)
                         .findAny()  // Randomly pick a vector and set it the center of its class
-                        .ifPresent(randomVector -> classCenters.add(randomVector.clone())));
+                        .ifPresent(randomVector -> {
+                            try {
+                                classCenters.add(randomVector.clone());
+                            } catch (CloneNotSupportedException e) {
+                                e.printStackTrace();
+                            }
+                        }));
         return this;
     }
 
