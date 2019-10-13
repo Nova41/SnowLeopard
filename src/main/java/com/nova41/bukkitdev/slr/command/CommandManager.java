@@ -13,14 +13,14 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
- * Class for managing sub commands of Snow Leopard.
+ * Class for managing sub commands of SnowLeopard.
  */
 public class CommandManager implements CommandExecutor {
 
     // All registered commands
     private Map<String, BiConsumer<CommandSender, String[]>> registeredCommands = new HashMap<>();
 
-    // Create a new CommandManager
+    // Create an instance of the CommandManager class
     public CommandManager(Plugin plugin, String baseCommand) {
         if (plugin != null)
             plugin.getServer().getPluginCommand(baseCommand).setExecutor(this);
@@ -44,8 +44,11 @@ public class CommandManager implements CommandExecutor {
                         .filter(entry -> !entry.getKey().equals(""))
                         .filter(entry -> fullExecution.startsWith(entry.getKey()))
                         .findAny();
+
         if (matchedCommand.isPresent()) {
-            String[] param = args.length == 0 ? new String[0] : Arrays.copyOfRange(args, matchedCommand.get().getKey().split(" ").length, args.length);
+            String[] param = args.length == 0 ? new String[0] : Arrays.copyOfRange(args,
+                    matchedCommand.get().getKey().split(" ").length, args.length);
+
             matchedCommand.get().getValue().accept(sender, param);
         } else
             sender.sendMessage(ChatColor.RED + "Unknown command. Please check your spellings.");

@@ -14,7 +14,7 @@ public class MathUtilTest {
 
     @Test
     public void round() {
-        assertEquals(0.13, MathUtil.round(0.1256, 2, RoundingMode.HALF_UP), 0);
+        assertEquals(0.13, SLMaths.round(0.1256, 2, RoundingMode.HALF_UP), 0);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class MathUtilTest {
         dataset.add(new LabeledData(1, new double[]{0.1, 0.1}));
         dataset.add(new LabeledData(1, new double[]{0.3, 0.7}));
         dataset.add(new LabeledData(1, new double[]{1.6, -0.1}));
-        MathUtil.normalize(dataset);
+        SLMaths.normalize(dataset);
         dataset.forEach(data -> System.out.println(Arrays.toString(data.getData())));
     }
 }

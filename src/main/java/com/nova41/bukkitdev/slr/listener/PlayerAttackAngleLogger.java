@@ -1,5 +1,6 @@
 package com.nova41.bukkitdev.slr.listener;
 
+import lombok.Getter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +13,13 @@ import java.util.*;
 /**
  * Class for logging angle between player's cross-hair and its target.
  *
- * We use string instead of Player object to identify players because we want to keep the record of a player if he/she re-logs.
+ * We use string instead of Player object to identify players, because
+ * we want to keep the record of a player if he/she re-logs.
  */
 public class PlayerAttackAngleLogger implements Listener {
-    // Lists all players whose loggedAngles need to be logged.
+
+    // Lists all players whose loggedAngles need to be logged
+    @Getter
     private Set<String> registeredPlayers = new HashSet<>();
 
     // Stores all players attacking and angle sequence they produced
@@ -31,7 +35,7 @@ public class PlayerAttackAngleLogger implements Listener {
         if (!registeredPlayers.contains(event.getDamager().getName()))
             return;
 
-        // Calculate angle. See 2.2 in https://www.spigotmc.org/threads/machine-learning-killaura-detection-in-minecraft.301609/
+        // Calculate angle
         Player player = (Player) event.getDamager();
         Entity entity = event.getEntity();
         Vector playerLookDir = player.getEyeLocation().getDirection();
@@ -56,11 +60,6 @@ public class PlayerAttackAngleLogger implements Listener {
         registeredPlayers.remove(player.getName());
     }
 
-    // Get all players whose loggedAngles need to be logged.
-    public Set<String> getRegisteredPlayers() {
-        return registeredPlayers;
-    }
-
     // Get logged angle sequence of a player
     public List<Float> getLoggedAngles(Player player) {
         return loggedAngles.get(player.getName());
@@ -70,4 +69,5 @@ public class PlayerAttackAngleLogger implements Listener {
     public void clearLoggedAngles(Player player) {
         loggedAngles.remove(player.getName());
     }
+
 }

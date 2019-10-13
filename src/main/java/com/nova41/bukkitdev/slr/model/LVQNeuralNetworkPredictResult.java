@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * The guess of a neural network when you ask the network to classify a vector
+ * The guess of a neural network when you ask the network to classify a vector.
  */
 public class LVQNeuralNetworkPredictResult {
 
@@ -14,7 +14,7 @@ public class LVQNeuralNetworkPredictResult {
     private List<Map.Entry<Double, Integer>> distances;
 
     /**
-     * Create a new predict result. The constructor can be accessed only by a neural network.
+     * Create a new predict result. The constructor can only be accessed by a neural network.
      */
     LVQNeuralNetworkPredictResult(TreeMap<Double, Integer> distances) {
         this.distances = new ArrayList<>(distances.entrySet());

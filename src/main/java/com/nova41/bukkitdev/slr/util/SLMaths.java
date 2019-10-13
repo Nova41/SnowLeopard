@@ -6,27 +6,21 @@ import org.apache.commons.lang.ArrayUtils;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Useful functions for calculations about a series of numbers
+ * Useful functions for calculations about a series of numbers.
  */
-public class MathUtil {
+public final class SLMaths {
 
-    /**
-     * Extract features from logged angles.
-     * Please refer to section 3 in <a href="https://www.spigotmc.org/threads/machine-learning-killaura-detection-in-minecraft.301609/">the thesis</a>
-     * <p>
-     * - a) The fluctuation of the angles (standard deviation of the sequence of angles) <p>
-     * - b) The average value of the angles (mean of the sequence of angles) <p>
-     * - c) Standard deviation of derivative of the sequence of angles <p>
-     * - d) Mean of derivative of the sequence of angles <p>
-     * @param angleSequence logged angle sequence
-     * @return vector with 4 dimensions [a, b, c, d]
-     */
+    private SLMaths() {}
+
     @SuppressWarnings("unused")
     public static double[] extractFeatures(List<Float> angleSequence) {
         List<Double> anglesDouble = toDoubleList(angleSequence);
@@ -42,8 +36,11 @@ public class MathUtil {
 
     // Get delta of a double list
     public static List<Double> calculateDelta(List<Double> doubleList) {
-        if (doubleList.size() <= 1)
-            throw new IllegalArgumentException("The list must contain 2 or more elements in order to calculate delta");
+        if (doubleList.size() <= 1) {
+            throw new IllegalArgumentException(
+                    "The list must contain 2 or more elements in order to calculate delta"
+            );
+        }
 
         List<Double> out = new ArrayList<>();
         for (int i = 1; i <= doubleList.size() - 1; i++)
@@ -90,20 +87,20 @@ public class MathUtil {
         return doubleList.stream().mapToDouble(e -> e).toArray();
     }
 
-    // generate a double array filled with random values from 0 to 1
+    // Generate a double array filled with random values from 0 to 1
     public static double[] randomArray(int length) {
         double[] randomArray = new double[length];
         applyFunc(randomArray, e -> e = ThreadLocalRandom.current().nextDouble());
         return randomArray;
     }
 
-    // apply function on a array
+    // Apply function on a array
     public static void applyFunc(double[] doubleArray, Function<Double, Double> func) {
         for (int i = 0; i <= doubleArray.length - 1; i++)
             doubleArray[i] = func.apply(doubleArray[i]);
     }
 
-    // add two vector together
+    // Add two vector together
     public static double[] add(double[] vectorA, double[] vectorB) {
         validateDimension("Two vectors need to have exact the same dimension", vectorA, vectorB);
 
@@ -116,24 +113,23 @@ public class MathUtil {
     // Get diff of two different vectors (subtract)
     public static double[] subtract(double[] vectorA, double[] vectorB) {
         validateDimension("Two vectors need to have exact the same dimension", vectorA, vectorB);
-
         return add(vectorA, opposite(vectorB));
     }
 
-    // get opposite numbers of elements in the vector
+    // Get opposite numbers of elements in the vector
     public static double[] opposite(double[] vector) {
         return multiply(vector, -1);
     }
 
-    // multiply all elements in the vector with a value
+    // Multiply all elements in the vector with a value
     public static double[] multiply(double[] vector, double factor) {
         double[] output = vector.clone();
         applyFunc(output, e -> e * factor);
         return output;
     }
 
-    // normalize dataset with feature scaling
-    // return: double[row number][0 = min value in this row, 1 = max value in this row]
+    // Normalize dataset with feature scaling
+    // Return: double[row number][0 = min value in this row, 1 = max value in this row]
     public static double[][] normalize(List<LabeledData> dataset) {
         validateDimension("Data in dataset have inconsistent features",
                 dataset.stream().map(LabeledData::getData).toArray(double[][]::new));
@@ -142,16 +138,17 @@ public class MathUtil {
         double[][] minMax = new double[dimension][2];
 
         for (int row = 0; row <= dimension - 1; row++) {
-            int rowCurrent = row;   // lambda needs variables to be effectively final
-            double min = Collections.min(dataset.stream().map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
-            double max = Collections.max(dataset.stream().map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
+            int rowCurrent = row;
+            double min = Collections.min(dataset.stream()
+                            .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
+            double max = Collections.max(dataset.stream()
+                            .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
             minMax[row] = new double[]{min, max};
             for (int i = 0; i <= dataset.size() - 1; i++) {
                 double originalValue = dataset.get(i).getData()[row];
                 dataset.get(i).setData(row, (originalValue - min) / (max - min));
             }
         }
-
         return minMax;
     }
 
@@ -171,4 +168,5 @@ public class MathUtil {
             if (vectors[0].length != vectors[i].length)
                 throw new IllegalArgumentException(message);
     }
+
 }
