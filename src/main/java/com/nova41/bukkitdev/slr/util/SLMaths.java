@@ -140,9 +140,9 @@ public final class SLMaths {
         for (int row = 0; row <= dimension - 1; row++) {
             int rowCurrent = row;
             double min = Collections.min(dataset.stream()
-                            .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
+                    .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
             double max = Collections.max(dataset.stream()
-                            .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
+                    .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
             minMax[row] = new double[]{min, max};
             for (int i = 0; i <= dataset.size() - 1; i++) {
                 double originalValue = dataset.get(i).getData()[row];
@@ -164,9 +164,10 @@ public final class SLMaths {
 
     @SuppressWarnings("SameParameterValue")
     private static void validateDimension(String message, double[]... vectors) {
-        for (int i = 0; i <= vectors.length - 1; i++)
+        for (int i = 0; i <= vectors.length - 1; i++) {
             if (vectors[0].length != vectors[i].length)
                 throw new IllegalArgumentException(message);
+        }
     }
 
 }

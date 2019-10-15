@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * Class for logging angle between player's cross-hair and its target.
- *
+ * <p>
  * We use string instead of Player object to identify players, because
  * we want to keep the record of a player if he/she re-logs.
  */
@@ -45,8 +45,9 @@ public class PlayerAttackAngleLogger implements Listener {
         float angle = playerLookDir.angle(playerEntityVec);
 
         // Log the angle
-        if (!loggedAngles.containsKey(player.getName()))
+        if (!loggedAngles.containsKey(player.getName())) {
             loggedAngles.put(player.getName(), new ArrayList<>());
+        }
         loggedAngles.get(player.getName()).add(angle);
     }
 

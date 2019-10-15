@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 /**
  * A Java implementation of learning-vector-quantization neural network.
- *
+ * <p>
  * References: T. Kohonen, "Improved Versions of Learning Vector
  * Quantization", International Joint Conference on Neural Networks (IJCNN),
  * 1990.
  *
- * @author  Nova41
+ * @author Nova41
  * @version 2.0
  */
 public class LVQNeuralNetwork {
@@ -44,10 +44,10 @@ public class LVQNeuralNetwork {
     /**
      * Create a new LVQ neural network with given learning parameters.
      *
-     * @param dimension     the number of dimensions expected from input vectors
-     * @param stepSize      initial step size
-     * @param stepDecRate   step decrease rate, the step size will *= stepDecRate after each epoch
-     * @param minStepSize   minimum step size, the step size ceases to decrease if it is lower than this value
+     * @param dimension   the number of dimensions expected from input vectors
+     * @param stepSize    initial step size
+     * @param stepDecRate step decrease rate, the step size will *= stepDecRate after each epoch
+     * @param minStepSize minimum step size, the step size ceases to decrease if it is lower than this value
      */
     public LVQNeuralNetwork(int dimension, double stepSize, double stepDecRate, double minStepSize) {
         this.dimension = dimension;
@@ -58,9 +58,10 @@ public class LVQNeuralNetwork {
 
     // Add a new labeled vector to the network
     public LVQNeuralNetwork addData(LabeledData vector) {
-        if (vector.getData().length != dimension)
+        if (vector.getData().length != dimension) {
             throw new IllegalArgumentException(String.format(
                     "Input has illegal dimensions (%d, excepted %d)", vector.getData().length, dimension));
+        }
 
         vectors.add(vector);
         return this;
@@ -73,9 +74,10 @@ public class LVQNeuralNetwork {
         if (classCenters.size() == 0)
             throw new IllegalStateException("Output layer is not initialized yet");
 
-            TreeMap<Double, Integer> distanceToInput = new TreeMap<>();
+        TreeMap<Double, Integer> distanceToInput = new TreeMap<>();
         for (int i = 0; i <= classCenters.size() - 1; i++)
             distanceToInput.put(SLMaths.euclideanDistance(vector, classCenters.get(i).getData()), i);
+
         return distanceToInput;
     }
 
@@ -152,9 +154,10 @@ public class LVQNeuralNetwork {
 
     // The position of points are round thus not accurate, and the code is a huge mess
     void printVectors() {
-        if (dimension != 2)
+        if (dimension != 2) {
             throw new IllegalArgumentException("The network does not support printing"
                     + " vectors with more than 2 dimensions");
+        }
 
         System.out.println("Input vectors: ");
         int[][] outputImage = new int[vectors.size()][vectors.size()];
@@ -163,6 +166,7 @@ public class LVQNeuralNetwork {
         for (LabeledData vector : vectors)
             outputImage[(int) (vector.getData()[0] * 10)][(int) (vector.getData()[1] * 10)]
                     = vector.getCategory() + 1;
+
         drawLayer(outputImage);
 
         // Clear outputImage[][] for drawing output layer
@@ -175,6 +179,7 @@ public class LVQNeuralNetwork {
         for (LabeledData vector : classCenters)
             outputImage[(int) Math.round(vector.getData()[0] * 10)][(int) Math.round(vector.getData()[1] * 10)]
                     = vector.getCategory() + 1;
+
         drawLayer(outputImage);
 
         /* The output would be something like:
@@ -201,8 +206,9 @@ public class LVQNeuralNetwork {
         System.out.println("+" + StringUtils.repeat("--", vectors.size()) + "+");
         for (int i = 0; i <= outputImage.length - 1; i++) {
             System.out.print("|");
-            for (int j = 0; j <= outputImage.length - 1; j++)
+            for (int j = 0; j <= outputImage.length - 1; j++) {
                 System.out.print(outputImage[i][j] == 0 ? "  " : outputImage[i][j] + " ");
+            }
             System.out.print("|\n");
         }
         System.out.println("+" + StringUtils.repeat("--", vectors.size()) + "+");

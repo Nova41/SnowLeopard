@@ -43,6 +43,7 @@ public final class SLFiles {
             String fileName,
             String releasePath) throws IOException {
         File toBeReleased = new File(plugin.getDataFolder(), getSeparatedString(releasePath));
+
         if (!toBeReleased.exists())
             FileUtils.copyInputStreamToFile(plugin.getResource(fileName), toBeReleased);
     }

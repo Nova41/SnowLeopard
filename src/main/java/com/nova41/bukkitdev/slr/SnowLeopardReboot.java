@@ -133,7 +133,7 @@ public final class SnowLeopardReboot extends JavaPlugin {
                     neuralNetwork.getAndUpdate((network) -> network.addData(new LabeledData(categoryID,
                             samples.stream().mapToDouble(e -> e).toArray())));
 
-            } catch (InvalidConfigurationException | IOException e) {
+            } catch (InvalidConfigurationException|IOException e) {
                 getLogger().severe("Unable to read dataset from '" + categoryFile.getName() + "'");
             }
         }
@@ -443,7 +443,7 @@ public final class SnowLeopardReboot extends JavaPlugin {
                 saveFileYaml.save(saveFile);
 
                 player.sendMessage(ChatColor.GREEN + "Samples saved.");
-            } catch (IOException | InvalidConfigurationException e) {
+            } catch (IOException|InvalidConfigurationException e) {
                 player.sendMessage(ChatColor.RED + "Unable to save samples due to an I/O error");
                 getLogger().severe("Unable to save sample for category '" + category + "'");
             }
@@ -479,10 +479,10 @@ public final class SnowLeopardReboot extends JavaPlugin {
 
     // Convert category id from a predict result of the neural network to the actual name of the category
     public String getCategoryNameFromID(int id) {
-        for (Map.Entry<String, Integer> entry : categoryNameMap.entrySet())
+        for (Map.Entry<String, Integer> entry : categoryNameMap.entrySet()) {
             if (entry.getValue() == id)
                 return entry.getKey();
-
+        }
         return null;
     }
 

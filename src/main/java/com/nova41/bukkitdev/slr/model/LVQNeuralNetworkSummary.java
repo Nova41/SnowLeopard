@@ -18,10 +18,10 @@ public final class LVQNeuralNetworkSummary {
     /**
      * Create a summary for a LVQ neural network. The constructor can be accessed only by a neural network.
      *
-     * @param epoch         times the network has been trained
-     * @param stepSize      current stepSize of the network
-     * @param inputCount    number of input vectors
-     * @param outputCount   number of neurons in output layer
+     * @param epoch       times the network has been trained
+     * @param stepSize    current stepSize of the network
+     * @param inputCount  number of input vectors
+     * @param outputCount number of neurons in output layer
      */
     LVQNeuralNetworkSummary(int epoch, double stepSize, int inputCount, int outputCount) {
         this.epoch = epoch;
