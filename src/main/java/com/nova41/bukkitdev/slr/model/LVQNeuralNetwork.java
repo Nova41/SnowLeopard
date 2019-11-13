@@ -1,6 +1,6 @@
 package com.nova41.bukkitdev.slr.model;
 
-import com.nova41.bukkitdev.slr.util.MathUtil;
+import com.nova41.bukkitdev.slr.util.SLMaths;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class LVQNeuralNetwork {
         // <distance, index in classCenters>; use TreeMap so the map is sorted naturally by keys
         TreeMap<Double, Integer> distanceToInput = new TreeMap<>();
         for (int i = 0; i <= classCenters.size() - 1; i++)
-            distanceToInput.put(MathUtil.euclideanDistance(vector, classCenters.get(i).getData()), i);
+            distanceToInput.put(SLMaths.euclideanDistance(vector, classCenters.get(i).getData()), i);
         return distanceToInput;
     }
 
@@ -99,7 +99,7 @@ public class LVQNeuralNetwork {
 
     // Normalize the dataset!
     public void normalize() {
-        minMaxOfRow = MathUtil.normalize(vectors);
+        minMaxOfRow = SLMaths.normalize(vectors);
     }
 
     // start train
@@ -108,13 +108,13 @@ public class LVQNeuralNetwork {
         for (LabeledData vector : vectors) {
             // calculate its distance to nearest class center and multiply it with step_size
             LabeledData nearestOutput = classCenters.get(getDistanceToClassCenters(vector.getData()).firstEntry().getValue());
-            double[] distToNearestOutput = MathUtil.multiply(MathUtil.subtract(vector.getData(), nearestOutput.getData()), step_size);
+            double[] distToNearestOutput = SLMaths.multiply(SLMaths.subtract(vector.getData(), nearestOutput.getData()), step_size);
 
             // pull the nearest class center closer by the distance above if the center and the vector have the same category, otherwise farther
             if (vector.getCategory() == nearestOutput.getCategory())
-                nearestOutput.setData(MathUtil.add(nearestOutput.getData(), distToNearestOutput));
+                nearestOutput.setData(SLMaths.add(nearestOutput.getData(), distToNearestOutput));
             else
-                nearestOutput.setData(MathUtil.subtract(nearestOutput.getData(), distToNearestOutput));
+                nearestOutput.setData(SLMaths.subtract(nearestOutput.getData(), distToNearestOutput));
         }
 
         // decrease step_size until it is smaller than or equal to min_step_size
@@ -134,7 +134,7 @@ public class LVQNeuralNetwork {
         // normalize the input data
         double[] vectorNormalized = vector.clone();
         for (int i = 0; i <= vector.length - 1; i++)
-            vectorNormalized[i] = MathUtil.normalize(vector[i], minMaxOfRow[i][0], minMaxOfRow[i][1]);
+            vectorNormalized[i] = SLMaths.normalize(vector[i], minMaxOfRow[i][0], minMaxOfRow[i][1]);
 
         return new LVQNeuralNetworkPredictResult(getDistanceToClassCenters(vectorNormalized));
     }

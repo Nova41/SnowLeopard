@@ -6,15 +6,20 @@ import org.apache.commons.lang.ArrayUtils;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Useful functions for calculations about a series of numbers
+ * Useful functions for calculations about a series of numbers.
  */
-public class MathUtil {
+public final class SLMaths {
+
+    private SLMaths() {}
 
     /**
      * Extract features from logged angles.
@@ -42,8 +47,11 @@ public class MathUtil {
 
     // Get delta of a double list
     public static List<Double> calculateDelta(List<Double> doubleList) {
-        if (doubleList.size() <= 1)
-            throw new IllegalArgumentException("The list must contain 2 or more elements in order to calculate delta");
+        if (doubleList.size() <= 1) {
+            throw new IllegalArgumentException(
+                    "The list must contain 2 or more elements in order to calculate delta"
+            );
+        }
 
         List<Double> out = new ArrayList<>();
         for (int i = 1; i <= doubleList.size() - 1; i++)
@@ -116,7 +124,6 @@ public class MathUtil {
     // Get diff of two different vectors (subtract)
     public static double[] subtract(double[] vectorA, double[] vectorB) {
         validateDimension("Two vectors need to have exact the same dimension", vectorA, vectorB);
-
         return add(vectorA, opposite(vectorB));
     }
 
@@ -142,16 +149,17 @@ public class MathUtil {
         double[][] minMax = new double[dimension][2];
 
         for (int row = 0; row <= dimension - 1; row++) {
-            int rowCurrent = row;   // lambda needs variables to be effectively final
-            double min = Collections.min(dataset.stream().map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
-            double max = Collections.max(dataset.stream().map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
+            int rowCurrent = row;
+            double min = Collections.min(dataset.stream()
+                    .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
+            double max = Collections.max(dataset.stream()
+                    .map(data -> data.getData()[rowCurrent]).collect(Collectors.toList()));
             minMax[row] = new double[]{min, max};
             for (int i = 0; i <= dataset.size() - 1; i++) {
                 double originalValue = dataset.get(i).getData()[row];
                 dataset.get(i).setData(row, (originalValue - min) / (max - min));
             }
         }
-
         return minMax;
     }
 
@@ -167,8 +175,10 @@ public class MathUtil {
 
     @SuppressWarnings("SameParameterValue")
     private static void validateDimension(String message, double[]... vectors) {
-        for (int i = 0; i <= vectors.length - 1; i++)
+        for (int i = 0; i <= vectors.length - 1; i++) {
             if (vectors[0].length != vectors[i].length)
                 throw new IllegalArgumentException(message);
+        }
     }
+
 }
