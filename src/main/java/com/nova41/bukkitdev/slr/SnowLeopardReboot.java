@@ -6,8 +6,8 @@ import com.nova41.bukkitdev.slr.model.LVQNeuralNetwork;
 import com.nova41.bukkitdev.slr.model.LVQNeuralNetworkPredictResult;
 import com.nova41.bukkitdev.slr.model.LVQNeuralNetworkSummary;
 import com.nova41.bukkitdev.slr.model.LabeledData;
-import com.nova41.bukkitdev.slr.util.FileUtil;
-import com.nova41.bukkitdev.slr.util.MathUtil;
+import com.nova41.bukkitdev.slr.util.SLFiles;
+import com.nova41.bukkitdev.slr.util.SLMaths;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -57,10 +57,10 @@ public class SnowLeopardReboot extends JavaPlugin {
 
     public void onEnable() {
         // Initialize data folder
-        FileUtil.createDirectoryIfAbsent(getDataFolder(), DIRNAME_CATEGORY);
-        FileUtil.createDirectoryIfAbsent(getDataFolder(), DIRNAME_DUMPED_DATA);
         try {
-            FileUtil.saveResourceIfAbsent(this, "config.yml", "config.yml");
+            SLFiles.createDirectoryIfAbsent(getDataFolder().getPath(), DIRNAME_CATEGORY);
+            SLFiles.createDirectoryIfAbsent(getDataFolder().getPath(), DIRNAME_DUMPED_DATA);
+            SLFiles.saveResourceIfAbsent(this, "config.yml", "config.yml");
         } catch (IOException e) {
             getLogger().severe("Unable to save resource file");
             e.printStackTrace();
@@ -185,7 +185,7 @@ public class SnowLeopardReboot extends JavaPlugin {
             // save logged angle sequence
             try {
                 List<Float> angleSequence = angleLogger.getLoggedAngles(player);
-                double[] extractedFeatures = MathUtil.extractFeatures(angleSequence);
+                double[] extractedFeatures = SLMaths.extractFeatures(angleSequence);
 
                 // specify the name of file containing the sequence and features extracted from it
                 String saveFileName = SnowLeopardReboot.DIRNAME_DUMPED_DATA + File.separator + System.currentTimeMillis() + ".yml";
@@ -285,7 +285,7 @@ public class SnowLeopardReboot extends JavaPlugin {
                     + ChatColor.GREEN + " for " + ChatColor.YELLOW + duration + ChatColor.GREEN + " seconds");
             classifyPlayer(testPlayer, duration , result -> {
                 // likelihood =  max possible difference - difference
-                double likelihood = MathUtil.round(result.getLikelihood() * 100, 2, RoundingMode.HALF_UP);
+                double likelihood = SLMaths.round(result.getLikelihood() * 100, 2, RoundingMode.HALF_UP);
 
                 sender.sendMessage(ChatColor.GREEN + "Neural network classification result:");
                 sender.sendMessage(ChatColor.GREEN + "  Best matched: " + ChatColor.YELLOW + getCategoryNameFromID(result.getCategory()));
@@ -350,7 +350,7 @@ public class SnowLeopardReboot extends JavaPlugin {
                 if (angleSequence == null)
                     break;
                 // extract the features from the sequence and save them to a temporary array
-                vectors[i - 1] = MathUtil.extractFeatures(angleSequence);
+                vectors[i - 1] = SLMaths.extractFeatures(angleSequence);
                 // clear saved angles to get ready for new angles
                 angleLogger.clearLoggedAngles(player);
             }
@@ -402,7 +402,7 @@ public class SnowLeopardReboot extends JavaPlugin {
             angleLogger.clearLoggedAngles(player);
 
             // Call the consumer with classification result
-            double[] extractedFeatures = MathUtil.extractFeatures(angleSequence);
+            double[] extractedFeatures = SLMaths.extractFeatures(angleSequence);
             consumer.accept(neuralNetwork.predict(extractedFeatures));
         }, duration * 20L);
     }
