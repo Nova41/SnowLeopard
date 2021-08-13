@@ -1,3 +1,5 @@
+> **This project is currently unmaintained.**
+
 ## SnowLeopardR
 SnowLeopardR is an open-source machine learning-based anticheat project. It classfies player's "combat style" with the time series built from player's movements and interactions on entities.
 
